@@ -22,4 +22,14 @@ class Comment {
       user: User.fromJson(json['user']),
     );
   }
+  static CrudComment addComment(Map<String, dynamic> json) {
+    return CrudComment.fromJson(json);
+  }
+  static CrudComment editComment(Map<String, dynamic> json) {
+    return CrudComment.fromJson(json);
+  }
+
+  static CrudComment deleteComment(Map<String, dynamic> json) {
+    return CrudComment.fromJson(json);
+  }
 }

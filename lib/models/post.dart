@@ -14,7 +14,7 @@ class Post {
   final int? offset;
   final int? itemsTotal;
   final int? pageTotal;
-  final List<CrudPost> items;
+  final List<Post> items;
 
   Post({
     required this.id,

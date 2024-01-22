@@ -1,4 +1,4 @@
-class ImageEntity {
+class Image {
   final String? path;
   final String? name;
   final String? type;
@@ -6,7 +6,7 @@ class ImageEntity {
   final String? mime;
   final String? url;
 
-  ImageEntity({
+  Image({
     required this.path,
     required this.name,
     required this.type,
@@ -22,8 +22,8 @@ class ImageEntity {
   String? get getMime => mime;
   String? get getUrl => url;
 
-  factory ImageEntity.fromJson(Map<String, dynamic> json) {
-    return ImageEntity(
+  factory Image.fromJson(Map<String, dynamic> json) {
+    return Image(
       path: json['path'],
       name: json['name'],
       type: json['type'],
@@ -44,8 +44,8 @@ class ImageEntity {
     };
   }
 
-  ImageEntity toEntity() {
-    return ImageEntity(
+  Image toEntity() {
+    return Image(
       path: path,
       name: name,
       type: type,

@@ -25,9 +25,11 @@ render.experimental.xml
 # Keystore files
 *.jks
 *.keystore
+.dart_tool/
 
 # Google Services (e.g. APIs or Firebase)
 google-services.json
+
 
 # Android Profiling
 *.hprof

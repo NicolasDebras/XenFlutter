@@ -6,7 +6,7 @@ class Post {
 
   final int? id;
   final int? createdAt;
-  final String? content;
+  final String content; //obligation d'avoir un contenu non N
   final Image? image;
   final User? user;
   final int? commentsCount;

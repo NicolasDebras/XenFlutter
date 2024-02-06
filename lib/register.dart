@@ -54,7 +54,7 @@ class Register extends StatelessWidget {
                 print(password);
                 final requestJson = LoginRequest(email: email, password: password);
                 final signupResponse = await authService.signIn(requestJson);
-                print("Connexion réussie");
+                print(signupResponse.authToken);
 
               },
               child: Text('Se connecter'),

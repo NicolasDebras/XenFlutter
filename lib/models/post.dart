@@ -65,7 +65,7 @@ class Post {
       user: User.fromJson(json['user']),
       comments: (json['comments'] as List<dynamic>?)
           ?.map((comment) => Comment.fromJson(comment))
-          .toList(),
+          .toList(), commentsCount: null,
     );
   }
   static List<Post> fromQueryAllPostsResponse(Map<String, dynamic> json) {
@@ -82,7 +82,7 @@ class Post {
       user: User.fromJson(json['user']),
       comments: (json['comments'] as List<dynamic>?)
           ?.map((comment) => Comment.fromJson(comment))
-          .toList(),
+          .toList(), commentsCount: null,
     );
   }
   static Post editPost(Map<String, dynamic> json) {

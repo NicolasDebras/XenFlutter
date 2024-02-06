@@ -5,15 +5,13 @@ import 'package:xenflutter/services/signup_request.dart';
 import 'package:xenflutter/services/signup_response.dart';
 
 class ApiService {
-  //connexion à l'api
-  final Dio _dio = Dio(
-    BaseOptions(baseUrl: 'https://xoc1-kd2t-7p9b.n7c.xano.io/api:xbcc5VEi'),
-  );
+  final Dio _dio;
 
-  //inscrire un user (A TESTER) et a changer de place
+  ApiService({required String baseUrl}) : _dio = Dio(BaseOptions(baseUrl: baseUrl ?? 'https://xoc1-kd2t-7p9b.n7c.xano.io/api:xbcc5VEi'));
+
+  //à retirer potentiellement
   Future<SignupResponse> signUp(SignupRequest request) async {
-    final response = await _dio.post('/users/signup', data: request.toJson());
+    final response = await _dio.post('/auth/signup', data: request.toJson());
     return SignupResponse.fromJson(response.data);
   }
-
 }

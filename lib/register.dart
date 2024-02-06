@@ -1,4 +1,11 @@
+import 'dart:js';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:xenflutter/services/AuthService.dart';
+import 'package:xenflutter/services/api_service.dart';
+import 'package:xenflutter/services/login_request.dart';
 
 class Register extends StatelessWidget {
 
@@ -7,6 +14,9 @@ class Register extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final apiService = Provider.of<ApiService>(context, listen: false);
+    final AuthService authService = AuthService(apiService.dio);
+
     return Expanded(
       child: Container(
         color: Colors.indigoAccent,
@@ -37,10 +47,14 @@ class Register extends StatelessWidget {
               ),
             ),
             ElevatedButton(
-              onPressed: () {
+              onPressed: () async {
                 String email = emailController.text;
                 String password = passwordController.text;
-
+                print(email);
+                print(password);
+                final requestJson = LoginRequest(email: email, password: password);
+                final signupResponse = await authService.signIn(requestJson);
+                print("Connexion réussie");
 
               },
               child: Text('Se connecter'),

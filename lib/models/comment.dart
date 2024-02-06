@@ -1,3 +1,5 @@
+import 'package:xenflutter/models/user.dart';
+
 class Comment {
   final int? id;
   final String? createdAt;

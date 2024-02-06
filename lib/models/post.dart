@@ -1,9 +1,13 @@
+import 'comment.dart';
+import 'user.dart';
+import 'image.dart';
+
 class Post {
 
   final int? id;
   final int? createdAt;
   final String? content;
-  final ImageModel? image;
+  final Image? image;
   final User? user;
   final int? commentsCount;
   final List<Comment>? comments;
@@ -16,13 +20,13 @@ class Post {
   final int? pageTotal;
   final List<Post> items;
 
-  Post({
+  Post(this.comments, this.itemsReceived, this.curPage, this.nextPage, this.prevPage, this.offset, this.itemsTotal, this.pageTotal, this.items, {
     required this.id,
     required this.createdAt,
     required this.content,
     required this.image,
     required this.user,
-    required this.commentsCount,
+    required this.commentsCount, List<Comment>? comments,
   });
   Post({
     required this.id,
@@ -47,7 +51,7 @@ class Post {
       id: json['id'],
       createdAt: json['created_at'],
       content: json['content'],
-      image: ImageModel.fromJson(json['image']),
+      image: Image.fromJson(json['image']),
       user: User.fromJson(json['user']),
       commentsCount: json['comments_count'],
     );
@@ -57,7 +61,7 @@ class Post {
       id: json['id'],
       createdAt: json['created_at'],
       content: json['content'],
-      image: ImageModel.fromJson(json['image']),
+      image: Image.fromJson(json['image']),
       user: User.fromJson(json['user']),
       comments: (json['comments'] as List<dynamic>?)
           ?.map((comment) => Comment.fromJson(comment))
@@ -74,7 +78,7 @@ class Post {
       id: json['id'],
       createdAt: json['created_at'],
       content: json['content'],
-      image: ImageModel.fromJson(json['image']),
+      image: Image.fromJson(json['image']),
       user: User.fromJson(json['user']),
       comments: (json['comments'] as List<dynamic>?)
           ?.map((comment) => Comment.fromJson(comment))
@@ -99,8 +103,8 @@ class Post {
     };
   }
 
-  PostEntity toEntity() {
-    return PostEntity(
+  Post toEntity() {
+    return Post(
       id: this.id,
       createdAt: this.createdAt,
       content: this.content,

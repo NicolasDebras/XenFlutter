@@ -1,6 +1,8 @@
 import 'package:dio/dio.dart';
-import 'package:xen_flutter/models/user.dart';
-import 'package:xen_flutter/models/post.dart';
+import 'package:xenflutter/models/user.dart';
+import 'package:xenflutter/models/post.dart';
+import 'package:xenflutter/services/signup_request.dart';
+import 'package:xenflutter/services/signup_response.dart';
 
 class ApiService {
   //connexion à l'api

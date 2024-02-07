@@ -1,11 +1,12 @@
-import 'dart:js';
 
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:xenflutter/services/AuthService.dart';
 import 'package:xenflutter/services/api_service.dart';
 import 'package:xenflutter/services/request/login_request.dart';
+import 'package:xenflutter/services/response/login_response.dart';
+
+import 'models/AuthState.dart';
 
 class Register extends StatelessWidget {
 
@@ -54,8 +55,11 @@ class Register extends StatelessWidget {
                 print(password);
                 final requestJson = LoginRequest(email: email, password: password);
                 final signupResponse = await authService.signIn(requestJson);
-                print(signupResponse.authToken);
+                final loginResponse = LoginResponse(user: signupResponse.user, authToken: signupResponse.authToken);
 
+                // Trouver AuthState dans le contexte et mettre à jour l'état
+                final authState = Provider.of<AuthState>(context, listen: false);
+                authState.login(loginResponse.authToken, loginResponse.user);
               },
               child: Text('Se connecter'),
             ),

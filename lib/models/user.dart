@@ -19,4 +19,13 @@ class User {
       email: json['email'],
     );
   }
+
+  factory User.empty() {
+    return User(
+      id: null,
+      createdAt: null,
+      name: null,
+      email: null,
+    );
+  }
 }

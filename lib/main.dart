@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:xenflutter/services/AuthService.dart';
 import 'package:provider/provider.dart';
 import 'package:xenflutter/services/api_service.dart';
+import 'design/DynamicContent.dart';
+import 'models/AuthState.dart';
+import 'models/user.dart';
 import 'register.dart';
 import 'header.dart';
 
@@ -20,7 +23,9 @@ class MyApp extends StatelessWidget {
         Provider<ApiService>(
           create: (_) => ApiService(),
         ),
-
+        ChangeNotifierProvider<AuthState>(
+          create: (_) => AuthState(user: User.empty()),
+        ),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
@@ -62,7 +67,9 @@ class _MyHomePageState extends State<MyHomePage> {
         body: Column(
           children: [
             Header(),
-            Register(),
+            Expanded(
+              child: DynamicContent(),
+            ),
           ],
         ),
       ),

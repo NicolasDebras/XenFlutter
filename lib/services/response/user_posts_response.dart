@@ -1,3 +1,5 @@
+import '../../models/post.dart';
+
 class UserPostsResponse {
   final int? itemsReceived;
   final int? curPage;
@@ -6,7 +8,7 @@ class UserPostsResponse {
   final int? offset;
   final int? itemsTotal;
   final int? pageTotal;
-  final List<UserPostModel>? items;
+  final List<Post>? items;
 
   UserPostsResponse({
     required this.itemsReceived,
@@ -29,7 +31,7 @@ class UserPostsResponse {
       itemsTotal: json['itemsTotal'],
       pageTotal: json['pageTotal'],
       items: (json['items'] as List<dynamic>)
-          .map((post) => UserPostModel.fromJson(post))
+          .map((post) => Post.fromJson(post))
           .toList(),
     );
   }

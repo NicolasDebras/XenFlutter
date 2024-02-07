@@ -38,5 +38,23 @@ class Post {
     required this.items,
   });
 
-
+  factory Post.fromJson(Map<String, dynamic> json) {
+    return Post(
+      id: json['id'] as int?,
+      createdAt: json['createdAt'] as int?,
+      content: json['content'] as String,
+      image: json['image'] != null ? Image.fromJson(json['image']) : null,
+      user: json['user'] != null ? User.fromJson(json['user']) : null,
+      commentsCount: json['commentsCount'] as int?,
+      comments: json['comments'] != null ? (json['comments'] as List).map((i) => Comment.fromJson(i)).toList() : null,
+      itemsReceived: json['itemsReceived'] as int?,
+      curPage: json['curPage'] as int?,
+      nextPage: json['nextPage'] as int?,
+      prevPage: json['prevPage'] as int?,
+      offset: json['offset'] as int?,
+      itemsTotal: json['itemsTotal'] as int?,
+      pageTotal: json['pageTotal'] as int?,
+      items: (json['items'] as List).map((i) => Post.fromJson(i)).toList(),
+    );
+  }
 }

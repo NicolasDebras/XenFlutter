@@ -6,7 +6,7 @@ class Post {
 
   final int? id;
   final int? createdAt;
-  final String content; //obligation d'avoir un contenu non N
+  final String content;
   final Image? image;
   final User? user;
   final int? commentsCount;
@@ -20,14 +20,6 @@ class Post {
   final int? pageTotal;
   final List<Post> items;
 
-  Post(this.comments, this.itemsReceived, this.curPage, this.nextPage, this.prevPage, this.offset, this.itemsTotal, this.pageTotal, this.items, {
-    required this.id,
-    required this.createdAt,
-    required this.content,
-    required this.image,
-    required this.user,
-    required this.commentsCount, List<Comment>? comments,
-  });
   Post({
     required this.id,
     required this.createdAt,
@@ -46,72 +38,5 @@ class Post {
     required this.items,
   });
 
-  factory Post.fromJson(Map<String, dynamic> json) {
-    return Post(
-      id: json['id'],
-      createdAt: json['created_at'],
-      content: json['content'],
-      image: Image.fromJson(json['image']),
-      user: User.fromJson(json['user']),
-      commentsCount: json['comments_count'],
-    );
-  }
-  factory Post.fromJson(Map<String, dynamic> json) {
-    return Post(
-      id: json['id'],
-      createdAt: json['created_at'],
-      content: json['content'],
-      image: Image.fromJson(json['image']),
-      user: User.fromJson(json['user']),
-      comments: (json['comments'] as List<dynamic>?)
-          ?.map((comment) => Comment.fromJson(comment))
-          .toList(), commentsCount: null,
-    );
-  }
-  static List<Post> fromQueryAllPostsResponse(Map<String, dynamic> json) {
-    return (json['items'] as List<dynamic>?)
-        ?.map((post) => Post.fromJsonMap(post))
-        .toList() ?? [];
-  }
-  static Post fromJsonMap(Map<String, dynamic> json) {
-    return Post(
-      id: json['id'],
-      createdAt: json['created_at'],
-      content: json['content'],
-      image: Image.fromJson(json['image']),
-      user: User.fromJson(json['user']),
-      comments: (json['comments'] as List<dynamic>?)
-          ?.map((comment) => Comment.fromJson(comment))
-          .toList(), commentsCount: null,
-    );
-  }
-  static Post editPost(Map<String, dynamic> json) {
-    return Post.fromJson(json);
-  }
-  static Post deletePost(Map<String, dynamic> json) {
-    return Post.fromJson(json);
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'id': this.id,
-      'created_at': this.createdAt,
-      'content': this.content,
-      'image': this.image?.toJson(),
-      'user': this.user?.toJson(),
-      'comments_count': this.commentsCount,
-    };
-  }
-
-  Post toEntity() {
-    return Post(
-      id: this.id,
-      createdAt: this.createdAt,
-      content: this.content,
-      image: this.image?.toEntity(),
-      user: this.user?.toEntity(),
-      commentsCount: this.commentsCount,
-    );
-  }
 
 }

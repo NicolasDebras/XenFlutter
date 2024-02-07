@@ -29,7 +29,8 @@ class _PostUx extends State<PostUx> {
           ),
         ),
         child: Center(
-            child: Text(widget.post.content)
+            child: Text(widget.post.content,
+                  style: const TextStyle(color: Colors.white),)
         ),
       ),
     );

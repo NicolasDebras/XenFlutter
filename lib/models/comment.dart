@@ -8,20 +8,21 @@ class Comment {
   final User? author; //j'ai renommé pour cohérence avec API...
 
   Comment({
-    this.id,
-    this.createdAt,
-    this.postId,
-    this.content,
-    this.author,
+    required this.id,
+    required this.createdAt,
+    required this.postId,
+    required this.content,
+    required this.author,
   });
+
 
   factory Comment.fromJson(Map<String, dynamic> json) {
     return Comment(
-      id: json['id'],
-      createdAt: json['created_at'],
-      postId: json['post_id'],
-      content: json['content'],
-      author: json['author'] != null ? User.fromJson(json['author']) : null,
+      id: json['id'] as int,
+      createdAt: json['created_at'] as String,
+      postId: json['post_id'] as int,
+      content: json['content'] as String,
+      author: User.fromJson(json['author'] as Map<String, dynamic>),
     );
   }
 }

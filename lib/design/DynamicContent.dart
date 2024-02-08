@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../login.dart';
 import '../models/AuthState.dart';
 import '../register.dart';
 import 'Post/PostList.dart';
@@ -15,7 +16,7 @@ class DynamicContent extends StatelessWidget {
             child: Postlist(),
           );
         } else {
-          return Register();
+          return Login();
         }
       },
     );

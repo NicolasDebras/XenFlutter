@@ -30,7 +30,14 @@ class _PostUx extends State<PostUx> {
                 child: Text(widget.post.content),
               ),
             if (widget.post.image?.url != null)
-              Image.network(widget.post.image!.url!),
+              SizedBox(
+                height: 100,
+                width: double.infinity,
+                child: Image.network(
+                  widget.post.image!.url!,
+                  fit: BoxFit.cover,
+                ),
+              ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
               child: Row(

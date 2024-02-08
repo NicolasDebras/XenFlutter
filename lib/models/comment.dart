@@ -5,14 +5,14 @@ class Comment {
   final String? createdAt;
   final int? postId;
   final String? content;
-  final User? user;
+  final User? author; //j'ai renommé pour cohérence avec API...
 
   Comment({
-    required this.id,
-    required this.createdAt,
-    required this.postId,
-    required this.content,
-    required this.user,
+    this.id,
+    this.createdAt,
+    this.postId,
+    this.content,
+    this.author,
   });
 
   factory Comment.fromJson(Map<String, dynamic> json) {
@@ -21,17 +21,7 @@ class Comment {
       createdAt: json['created_at'],
       postId: json['post_id'],
       content: json['content'],
-      user: User.fromJson(json['user']),
+      author: json['author'] != null ? User.fromJson(json['author']) : null,
     );
-  }
-  static Comment addComment(Map<String, dynamic> json) {
-    return Comment.fromJson(json);
-  }
-  static Comment editComment(Map<String, dynamic> json) {
-    return Comment.fromJson(json);
-  }
-
-  static Comment deleteComment(Map<String, dynamic> json) {
-    return Comment.fromJson(json);
   }
 }

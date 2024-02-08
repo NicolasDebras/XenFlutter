@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 
-class Header extends StatelessWidget {
+class HeaderAppBar extends StatelessWidget implements PreferredSizeWidget {
+  HeaderAppBar({Key? key}) : super(key: key);
 
-  //TODO à completer
   @override
   Widget build(BuildContext context) {
-    return Container(
-        height: MediaQuery.of(context).size.height * 0.10,
-        width: MediaQuery.of(context).size.width,
-        color: Colors.indigo
+    return AppBar(
+      backgroundColor: Colors.indigo,
+      elevation: 0,
     );
   }
- }
+
+  @override
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight); // hauteur standard
+}

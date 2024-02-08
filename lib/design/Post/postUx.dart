@@ -15,19 +15,12 @@ class PostUx extends StatefulWidget {
 class _PostUx extends State<PostUx> {
   @override
   Widget build(BuildContext context) {
-    Color color = Colors.indigoAccent.shade700;
 
     return GestureDetector(
       onTap: _onTap,
       child: Container(
         height: 25,
-        width: 100,
-        decoration: BoxDecoration(
-          color: color,
-          borderRadius: const BorderRadius.all(
-            Radius.circular(10),
-          ),
-        ),
+        color: Colors.indigoAccent,
         child: Center(
             child: Text(widget.post.content,
                   style: const TextStyle(color: Colors.white),)

@@ -11,7 +11,9 @@ class DynamicContent extends StatelessWidget {
     return Consumer<AuthState>(
       builder: (context, authState, child) {
         if (authState.isLoggedIn) {
-          return Postlist();
+          return Expanded(
+            child: Postlist(),
+          );
         } else {
           return Register();
         }

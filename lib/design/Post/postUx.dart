@@ -18,12 +18,30 @@ class _PostUx extends State<PostUx> {
 
     return GestureDetector(
       onTap: _onTap,
-      child: Container(
-        height: 25,
-        color: Colors.indigoAccent,
-        child: Center(
-            child: Text(widget.post.content,
-                  style: const TextStyle(color: Colors.white),)
+      child: Card(
+        margin: const EdgeInsets.all(8.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(widget.post.user?.name ?? 'Anonyme'),
+            if (widget.post.content.isNotEmpty)
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Text(widget.post.content),
+              ),
+            if (widget.post.image?.url != null)
+              Image.network(widget.post.image!.url!),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Icon(Icons.comment, size: 20.0),
+                  Text('${widget.post.commentsCount ?? 0}'),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );

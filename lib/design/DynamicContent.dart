@@ -3,8 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../login.dart';
 import '../models/AuthState.dart';
-import '../register.dart';
-import 'Post/PostList.dart';
+import 'Post/PostPage.dart';
 
 class DynamicContent extends StatelessWidget {
   @override
@@ -13,7 +12,7 @@ class DynamicContent extends StatelessWidget {
       builder: (context, authState, child) {
         if (authState.isLoggedIn) {
           return Expanded(
-            child: Postlist(),
+            child: PostsPage(),
           );
         } else {
           return Login();

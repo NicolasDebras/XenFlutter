@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:xenflutter/services/request/signup_request.dart';
 import 'package:xenflutter/services/AuthService.dart';
-import 'package:xenflutter/services/response/signup_response.dart';
 
 class Register extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();

@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:xenflutter/design/Post/AddEditPostWidget.dart';
 import 'package:xenflutter/models/post.dart';
 
-import '../../models/AuthState.dart';
+import '../../services/PostsService.dart';
+import '../../services/provider/AuthState.dart';
+import '../../services/provider/api_service.dart';
 
 //Post a mettre dans la liste des postes
 class PostUx extends StatefulWidget {
@@ -20,6 +23,8 @@ class _PostUx extends State<PostUx> {
   Widget build(BuildContext context) {
     final authState = Provider.of<AuthState>(context, listen: false);
     final isUserPostOwner = authState.user.id == widget.post.user?.id;
+    final apiService = Provider.of<ApiService>(context, listen: false);
+    final PostsService postsService = PostsService(apiService.dio);
 
     return GestureDetector(
       onTap: _onTap,
@@ -54,24 +59,28 @@ class _PostUx extends State<PostUx> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  // Icone de commentaire
                   Icon(Icons.comment, color: Colors.white,),
                   Text('${widget.post.commentsCount ?? 0}', style: const TextStyle(
                     color: Colors.white,
                   ),),
-                  // Icone de modification
                   if (isUserPostOwner) ...[
                     IconButton(
                       icon: Icon(Icons.edit, color: Colors.white,),
                       onPressed: () {
-                        // Logique de modification
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return Dialog(
+                              child: AddEditPostWidget(post: widget.post),
+                            );
+                          },
+                        );
                       },
                     ),
-                    // Icone de suppression
                     IconButton(
                       icon: Icon(Icons.delete, color: Colors.white,),
                       onPressed: () {
-                        // Logique de suppression
+                        postsService.deletePost(postId: widget.post!.id!, token: authState.authToken);
                       },
                     ),
                   ],

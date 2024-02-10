@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:xenflutter/services/AuthService.dart';
 import 'package:provider/provider.dart';
-import 'package:xenflutter/services/api_service.dart';
+import 'package:xenflutter/services/provider/AuthState.dart';
+import 'package:xenflutter/services/provider/PostsProvider.dart';
+import 'package:xenflutter/services/provider/api_service.dart';
 import 'design/DynamicContent.dart';
-import 'models/AuthState.dart';
 import 'models/user.dart';
 import 'register.dart';
 import 'header.dart';
@@ -22,6 +23,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider<AuthState>(
           create: (_) => AuthState(user: User.empty()),
+        ),
+        ChangeNotifierProvider<PostsProvider>(
+          create: (_) => PostsProvider(),
         ),
       ],
       child: MaterialApp(

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../login.dart';
-import '../models/AuthState.dart';
+import '../services/provider/AuthState.dart';
 import 'Post/PostPage.dart';
 
 class DynamicContent extends StatelessWidget {

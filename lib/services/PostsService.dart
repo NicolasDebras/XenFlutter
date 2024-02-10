@@ -46,4 +46,50 @@ class PostsService {
     }
   }
 
+  Future<void> editPost({required int postId, required String content, File? image, required String token}) async {
+    FormData formData = FormData.fromMap({
+      'content': content,
+    });
+    if (image != null) {
+      formData.files.add(MapEntry(
+        'base_64_image',
+        await MultipartFile.fromFile(image.path, filename: image.path.split('/').last),
+      ));
+    }
+    try {
+      await _dio.patch(
+        '/post/$postId',
+        data: formData,
+        options: Options(
+          headers: {
+            'accept': 'application/json',
+            'Authorization': 'Bearer $token',
+            'Content-Type': 'multipart/form-data',
+          },
+        ),
+      );
+    } catch (e) {
+      print('Erreur lors de l\'édition d\'un post: $e');
+      throw Exception('Erreur lors de l\'édition d\'un post');
+    }
+  }
+
+  Future<void> deletePost({required int postId, required String token}) async {
+    try {
+      await _dio.delete(
+        '/post/$postId',
+        options: Options(
+          headers: {
+            'accept': 'application/json',
+            'Authorization': 'Bearer $token',
+          },
+        ),
+      );
+    } catch (e) {
+      print('Erreur lors de la suppression d\'un post: $e');
+      throw Exception('Erreur lors de la suppression d\'un post');
+    }
+  }
+
+
 }

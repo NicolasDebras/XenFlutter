@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../models/AuthState.dart';
 import '../../models/post.dart';
 import '../../services/PostsService.dart';
-import '../../services/api_service.dart';
+import '../../services/provider/AuthState.dart';
+import '../../services/provider/api_service.dart';
 
 class AddEditPostWidget extends StatefulWidget {
   final Post? post;
@@ -42,7 +42,7 @@ class _AddEditPostWidgetState extends State<AddEditPostWidget> {
         if (widget.post == null) {
           await postsService.addPost(content: content, token: authState.authToken);
         } else {
-          // TODO EDITION
+          await postsService.editPost(postId: widget.post!.id!, content: content, token: authState.authToken);
         }
         Navigator.of(context).pop();
       } catch (e) {

@@ -2,11 +2,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:xenflutter/services/AuthService.dart';
-import 'package:xenflutter/services/api_service.dart';
+import 'package:xenflutter/services/provider/AuthState.dart';
+import 'package:xenflutter/services/provider/api_service.dart';
 import 'package:xenflutter/services/request/login_request.dart';
 import 'package:xenflutter/services/response/login_response.dart';
 
-import 'models/AuthState.dart';
 
 class Login extends StatelessWidget {
 

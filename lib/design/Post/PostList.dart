@@ -4,7 +4,7 @@ import 'package:xenflutter/design/Post/postUx.dart';
 import 'package:xenflutter/services/PostsService.dart';
 
 import '../../models/post.dart';
-import '../../services/api_service.dart';
+import '../../services/provider/api_service.dart';
 
 // Liste des posts
 class Postlist extends StatelessWidget {

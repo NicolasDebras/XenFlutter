@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../../models/post.dart';
 import '../../services/PostsService.dart';
 import '../../services/provider/AuthState.dart';
+import '../../services/provider/PostsProvider.dart';
 import '../../services/provider/api_service.dart';
 
 class AddEditPostWidget extends StatefulWidget {
@@ -38,11 +39,14 @@ class _AddEditPostWidgetState extends State<AddEditPostWidget> {
         final apiService = Provider.of<ApiService>(context, listen: false);
         final PostsService postsService = PostsService(apiService.dio);
         final authState = Provider.of<AuthState>(context, listen: false);
+        final postsProvider = Provider.of<PostsProvider>(context, listen: false);
 
         if (widget.post == null) {
-          await postsService.addPost(content: content, token: authState.authToken);
+          Post post = await postsService.addPost(content: content, token: authState.authToken);
+          postsProvider.addPost(post);
         } else {
           await postsService.editPost(postId: widget.post!.id!, content: content, token: authState.authToken);
+          postsProvider.editPost(content, widget.post!.id!);
         }
         Navigator.of(context).pop();
       } catch (e) {

@@ -5,7 +5,7 @@ import 'image.dart';
 class Post {
   final int? id;
   final int? createdAt;
-  late final String content;
+  late  String content;
   final Image? image;
   final User? user;
   final int? commentsCount;

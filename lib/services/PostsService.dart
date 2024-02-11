@@ -2,6 +2,8 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:xenflutter/services/response/PostsResponse.dart';
 
+import '../models/post.dart';
+
 class PostsService {
   final Dio _dio;
 
@@ -18,7 +20,7 @@ class PostsService {
     }
   }
 
-  Future<void> addPost({required String content, File? image, required String token}) async {
+  Future<Post> addPost({required String content, File? image, required String token}) async {
     FormData formData = FormData.fromMap({
       'content': content,
     });
@@ -29,7 +31,7 @@ class PostsService {
       ));
     }
     try {
-      await _dio.post(
+      final response = await _dio.post(
         '/post',
         data: formData,
         options: Options(
@@ -40,6 +42,7 @@ class PostsService {
           },
         ),
       );
+      return Post.fromJson(response.data);
     } catch (e) {
       print('Erreur lors de l\'ajout d\'un post: $e');
       throw Exception('Erreur lors de l\'ajout d\'un post');

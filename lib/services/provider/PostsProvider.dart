@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../../models/post.dart';
 import '../PostsService.dart';
+import '../response/PostsResponse.dart';
 import 'api_service.dart';
 
 class PostsProvider with ChangeNotifier {
@@ -10,11 +11,16 @@ class PostsProvider with ChangeNotifier {
 
   List<Post> get posts => _posts;
 
-  void loadPosts(BuildContext context) async {
+  Future<void> loadPosts(BuildContext context) async {
     final apiService = Provider.of<ApiService>(context, listen: false);
     final PostsService postsService = PostsService(apiService.dio);
-    _posts = postsService.getAll() as List<Post>;
-    notifyListeners();
+    try {
+      final PostsResponse response = await postsService.getAll();
+      _posts = response.items;
+      notifyListeners();
+    } catch (e) {
+      print("Erreur lors du chargement des posts: $e");
+    }
   }
 
   void addPost(Post post) {

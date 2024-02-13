@@ -34,6 +34,8 @@ class _PostlistState extends State<Postlist> {
             itemBuilder: (context, index) {
               return PostUx(postsProvider.posts[index]);
             },
+            padding: EdgeInsets.zero,
+            shrinkWrap: true,
           );
         }
       },

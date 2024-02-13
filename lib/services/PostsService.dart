@@ -94,5 +94,14 @@ class PostsService {
     }
   }
 
+  Future<Post> getById(int postId) async {
+    try {
+      final response = await _dio.get('/post/$postId');
+      return Post.fromJson(response.data);
+    } catch (e) {
+      print('Erreur lors de la récupération du post: $e');
+      throw Exception('Erreur lors de la récupération du post: $e');
+    }
+  }
 
 }

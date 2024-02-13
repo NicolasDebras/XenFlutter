@@ -40,4 +40,10 @@ class PostsProvider with ChangeNotifier {
     _posts.removeWhere((post) => post.id == postId);
     notifyListeners();
   }
+
+  Future<void> loadCommentsForPost(int postId) async {
+    // Trouvez le post par postId et mettez à jour ses commentaires
+    final postIndex = _posts.indexWhere((post) => post.id == postId);
+
+  }
 }

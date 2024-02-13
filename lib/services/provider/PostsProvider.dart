@@ -41,9 +41,20 @@ class PostsProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> loadCommentsForPost(int postId) async {
-    // Trouvez le post par postId et mettez à jour ses commentaires
-    final postIndex = _posts.indexWhere((post) => post.id == postId);
+  void loadCommentsForPost(Post post, BuildContext context) async {
+    final apiService = Provider.of<ApiService>(context, listen: false);
+    final postsService = PostsService(apiService.dio);
+
+    try {
+      final comments = await postsService.getById(post.id!);
+      final postIndex = _posts.indexWhere((p) => p.id == post.id);
+      if (postIndex != -1) {
+        _posts[postIndex].comments = comments.comments;
+        notifyListeners();
+      }
+    } catch (e) {
+      print("Erreur lors du chargement des commentaires: $e");
+    }
 
   }
 }

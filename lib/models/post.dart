@@ -9,7 +9,7 @@ class Post {
   final Image? image;
   final User? user;
   final int? commentsCount;
-  final List<Comment>? comments;
+  late List<Comment>? comments;
 
   Post({
     this.id,

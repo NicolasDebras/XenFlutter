@@ -16,7 +16,7 @@ class CommentResponse {
   factory CommentResponse.fromJson(Map<String, dynamic> json) {
     return CommentResponse(
       id: json['id'],
-      createdAt: json['created_at'],
+      createdAt: json['created_at']?.toString(),
       content: json['content'],
       user: json['user'] != null ? User.fromJson(json['user']) : null,
     );

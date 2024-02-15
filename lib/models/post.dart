@@ -8,7 +8,7 @@ class Post {
   late  String content;
   final Image? image;
   final User? user;
-  final int? commentsCount;
+  late int? commentsCount;
   late List<Comment>? comments;
 
   Post({
@@ -17,7 +17,7 @@ class Post {
     required this.content,
     this.image,
     this.user,
-    this.commentsCount,
+    required this.commentsCount,
     this.comments,
   });
 

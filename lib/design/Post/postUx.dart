@@ -7,6 +7,7 @@ import '../../services/PostsService.dart';
 import '../../services/provider/AuthState.dart';
 import '../../services/provider/PostsProvider.dart';
 import '../../services/provider/api_service.dart';
+import 'AddEditCommentWidget.dart';
 
 
 class PostUx extends StatefulWidget {
@@ -66,7 +67,15 @@ class _PostUxState extends State<PostUx> {
               children: [
                 Row(
                   children: [
-                    Icon(Icons.comment, color: actionIconColor),
+                    IconButton(
+                      icon: Icon(Icons.comment, color: actionIconColor),
+                      onPressed: () {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) => AddEditCommentWidget(postId: widget.post.id!),
+                        );
+                      },
+                    ),
                     SizedBox(width: 5),
                     Text('${widget.post.commentsCount ?? 0}', style: TextStyle(color: textColor)),
                   ],
@@ -99,6 +108,8 @@ class _PostUxState extends State<PostUx> {
   }
 
   Widget _buildCommentsSection() {
+    final authState = Provider.of<AuthState>(context, listen: false);
+
     return Consumer<PostsProvider>(
       builder: (context, provider, child) {
         final postWithComments = provider.posts.firstWhere((p) => p.id == widget.post.id, orElse: () => widget.post);
@@ -106,12 +117,35 @@ class _PostUxState extends State<PostUx> {
           padding: const EdgeInsets.all(8.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: postWithComments.comments?.map((comment) => Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            children: postWithComments.comments?.map((comment) => Row(
               children: [
-                Text(comment.content!, style: TextStyle(color: Colors.white70)),
-                Text("- ${comment.author!.name}", style: TextStyle(color: Colors.white70, fontSize: 12)),
-                SizedBox(height: 8),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(comment.content!, style: TextStyle(color: Colors.white70)),
+                      Text("- ${comment.author!.name}", style: TextStyle(color: Colors.white70, fontSize: 12)),
+                    ],
+                  ),
+                ),  // Condition pour afficher les icônes de modification et de suppression
+                if (authState.user.id == comment.author?.id) ...[
+                  IconButton(
+                    icon: Icon(Icons.edit, color: Colors.white70),
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) => AddEditCommentWidget(postId: widget.post.id!, comment: comment),
+                      );
+                    },
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.delete, color: Colors.redAccent),
+                    onPressed: () {
+                      final postsProvider = Provider.of<PostsProvider>(context, listen: false);
+                      postsProvider.deleteCommentFromPost(widget.post.id!, comment.id, context, authState.authToken);
+                    },
+                  ),
+                ],
               ],
             )).toList() ?? [],
           ),
@@ -119,6 +153,7 @@ class _PostUxState extends State<PostUx> {
       },
     );
   }
+
 
 
   void _showEditDialog(BuildContext context) {

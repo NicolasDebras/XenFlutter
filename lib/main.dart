@@ -27,6 +27,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<PostsProvider>(
           create: (_) => PostsProvider(),
         ),
+        Provider<AuthService>(
+          create: (context) => AuthService(Provider.of<ApiService>(context, listen: false).dio),
+        ),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',

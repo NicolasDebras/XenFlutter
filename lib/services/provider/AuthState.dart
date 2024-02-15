@@ -6,6 +6,15 @@ class AuthState with ChangeNotifier {
   String _authToken = '';
   User _user;
 
+  bool _showLogin = true;
+
+  bool get showLogin => _showLogin;
+
+  void toggleForm() {
+    _showLogin = !_showLogin;
+    notifyListeners();
+  }
+
   AuthState({bool isLoggedIn = false, String authToken = '', required User user})
       : _isLoggedIn = isLoggedIn,
         _authToken = authToken,

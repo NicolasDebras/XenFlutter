@@ -1,30 +1,48 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
-import 'package:xenflutter/main.dart';
+import 'package:provider/provider.dart';
+import 'package:xenflutter/design/Post/postUx.dart';
+import 'package:xenflutter/models/comment.dart';
+import 'package:xenflutter/models/post.dart';
+import 'package:xenflutter/models/user.dart';
+import 'package:xenflutter/services/provider/PostsProvider.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(MyApp());
+  Widget makeTestableWidget({required Widget child}) {
+    return MaterialApp(
+      home: Scaffold(
+        body: Provider<PostsProvider>(
+          create: (_) => PostsProvider(),
+          child: child,
+        ),
+      ),
+    );
+  }
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+  testWidgets('Post card expands to show comments on tap', (WidgetTester tester) async {
+    // Créer un post de test avec des commentaires
+    final Post testPost = Post(
+      id: 1,
+      content: "Test post",
+      comments: [
+        Comment(id: 1, content: "Test comment 1", author: User(id: 1, name: "User 1", email:'toto', createdAt: '11111'), createdAt: '11111'),
+        Comment(id: 2, content: "Test comment 2", author: User(id: 2, name: "User 2", email:'toto', createdAt: '11111'), createdAt: '11111'),
+      ],
+      commentsCount: 2,
+    );
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+    // Construire l'UI de test
+    await tester.pumpWidget(makeTestableWidget(child: PostUx(testPost)));
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    // Vérifier si la card est initialement dans son état réduit
+    expect(find.byType(Expanded), findsNothing);
+
+    // Simuler un tap sur la card pour l'agrandir
+    await tester.tap(find.byType(Card));
+    await tester.pumpAndSettle(); // Attendre les animations si nécessaire
+
+    // Vérifier si la card s'est agrandie pour montrer les commentaires
+    expect(find.text('Test comment 1'), findsOneWidget);
+    expect(find.text('Test comment 2'), findsOneWidget);
   });
 }
